@@ -1,0 +1,23 @@
+{
+  "name": "postnetjs",
+  "version": "1.0.0",
+  "description": "Postnet Javascript communicator",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "serve": "ts-node ./src/example.ts",
+    "build": "tsc",
+    "prebuild": "rimraf dist"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "crc": "^4.3.2",
+    "serialport": "^12.0.0"
+  },
+  "devDependencies": {
+    "rimraf": "^5.0.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
+  }
+}
