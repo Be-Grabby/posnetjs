@@ -1,4 +1,5 @@
 import { SerialPort } from 'serialport';
+import { parseErrors } from '../utils/error.util';
 import { PostnetCommand } from './commands/interfaces/postnet-command.interface';
 
 export interface PostnetConfig {
@@ -22,6 +23,12 @@ export class Postnet {
   }
 
   bootstrap() {
+    if (!this.serialPort.isOpen.valueOf()) {
+      throw ({
+        message: 'Serial port is not available.',
+      });
+    }
+
     this.serialPort.on('data', (data) =>  {
       if (this.config.debug && this.config.debug.receive) {
         console.log("[receiving] \t>" + data.toString('binary'));
@@ -35,7 +42,9 @@ export class Postnet {
 
   async execute(command: PostnetCommand) {
     if (!command.validate()) {
-      throw new Error('Invalid command');
+      throw ({
+        message: 'Invalid params for the command.',
+      });
     }
 
     const commandBuffer = command.execute();
@@ -46,19 +55,20 @@ export class Postnet {
     }
 
     return new Promise((resolve, reject) => {
-      if (command.parse) {
-        this.messageResolver = (message) => {
+      this.messageResolver = (message) => {
+        if (command.parse) {
           const parsed = command.parse(message);
-
           resolve(parsed);
-        };
+        }
 
-        // Timeout after 5 seconds
-        setTimeout(() => reject('Timeout'), 5000);
-      } else {
-        setTimeout(() => resolve(null), 10);
-      }
+        const error = parseErrors(message);
 
+        if (error) {
+          reject(error);
+        } else {
+          resolve(undefined);
+        }
+      };
 
       this.serialPort.write(commandBuffer);
     });

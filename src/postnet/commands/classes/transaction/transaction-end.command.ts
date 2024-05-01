@@ -39,15 +39,21 @@ export class TransactionEndCommand implements PostnetCommand {
 
   validate(): boolean {
     if (this.options.total && this.options.total > 9999999999) {
-      throw new Error('Fiscal value must be less than 9999999999');
+      throw ({
+        message: 'Fiscal value must be less than 9999999999',
+      });
     }
 
     if (this.options.valueOut && this.options.valueOut > 9999999999) {
-      throw new Error('Value out must be less than 9999999999');
+      throw ({
+        message: 'Value out must be less than 9999999999',
+      });
     }
 
     if (this.options.valueReturned && this.options.valueReturned > 9999999999) {
-      throw new Error('Value returned must be less than 9999999999');
+      throw ({
+        message: 'Value returned must be less than 9999999999',
+      });
     }
 
     return true;

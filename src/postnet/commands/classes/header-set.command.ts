@@ -30,7 +30,9 @@ export class HeaderSetCommand implements PostnetCommand {
 
   validate(): boolean {
     if (!this.text) {
-      throw new Error('Header text is required');
+      throw ({
+        message: 'Header text is required.',
+      });
     }
 
     return true;

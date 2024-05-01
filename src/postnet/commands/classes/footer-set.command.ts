@@ -33,7 +33,9 @@ export class FooterSetCommand implements PostnetCommand {
 
   validate(): boolean {
     if (!this.payload.text) {
-      throw new Error('Footer text is required');
+      throw ({
+        message: 'Footer text is required.',
+      });
     }
 
     return true;

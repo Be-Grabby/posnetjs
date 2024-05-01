@@ -9,6 +9,13 @@ export interface TransactionLinePayload {
   name: string;
   /**
    * Vat rate - Rate number provided (0 - 6)
+   * 0 - 23%
+   * 1 - ???
+   * 2 - 5%
+   * 3 - 0%
+   * 4 - 0% - Zwolniona E
+   * 5 - ???
+   * 6 - ??
    * Command: vt
    */
   vatRate: 0 | 1 | 2 | 3 | 4 | 5 | 6;

@@ -18,11 +18,15 @@ export class TransactionManager {
     const totalPaid = transaction.payments.reduce((acc, payment) => acc + payment.value, 0);
 
     if (totalPrice !== transaction.end.total) {
-      throw new Error('Total price does not match the sum of the products');
+      throw ({
+        message: 'Total price does not match the sum of the products',
+      });
     }
 
     if (totalPaid !== transaction.end.total && transaction.payments.length > 0) {
-      throw new Error('Total paid does not match the total price');
+      throw ({
+        message: 'Total paid does not match the total price',
+      });
     }
 
     return true;
