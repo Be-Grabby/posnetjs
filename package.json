@@ -1,7 +1,11 @@
 {
   "name": "postnetjs",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Postnet Javascript communicator",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Be-Grabby/postnetjs.git"
+  },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
