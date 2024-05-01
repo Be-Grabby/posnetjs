@@ -23,11 +23,11 @@ export class Postnet {
   }
 
   bootstrap() {
-    if (!this.serialPort.isOpen.valueOf()) {
-      throw ({
-        message: 'Serial port is not available.',
-      });
-    }
+    // if (!this.serialPort.isOpen.valueOf()) {
+    //   throw ({
+    //     message: 'Serial port is not available.',
+    //   });
+    // }
 
     this.serialPort.on('data', (data) =>  {
       if (this.config.debug && this.config.debug.receive) {
