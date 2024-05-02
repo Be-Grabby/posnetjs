@@ -1,5 +1,5 @@
 import { stringToCommand } from '../../../../utils/command-parser.util';
-import { PostnetCommand } from '../../interfaces/postnet-command.interface';
+import { PosnetCommand } from '../../interfaces/posnet-command.interface';
 
 export interface TransactionInitPayload {
   /**
@@ -13,7 +13,7 @@ export interface TransactionInitPayload {
 /**
  * [trinit] Transaction initialization
  */
-export class TransactionInitCommand implements PostnetCommand {
+export class TransactionInitCommand implements PosnetCommand {
   allias = 'trinit';
 
   validate(): boolean {

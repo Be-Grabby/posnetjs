@@ -1,4 +1,4 @@
-import { Postnet } from '../../postnet';
+import { Posnet } from '../../posnet';
 import { TransactionEndCommand, TransactionEndPayload } from '../classes/transaction/transaction-end.command';
 import { TransactionInitCommand } from '../classes/transaction/transaction-init.command';
 import { TransactionLineCommand, TransactionLinePayload } from '../classes/transaction/transaction-line.command';
@@ -11,7 +11,7 @@ export interface Transaction {
 }
 
 export class TransactionManager {
-  constructor(private postnet: Postnet) {}
+  constructor(private posnet: Posnet) {}
 
   validate(transaction: Transaction) {
     const totalPrice = transaction.products.reduce((acc, product) => acc + product.totalAmount, 0);
@@ -35,19 +35,19 @@ export class TransactionManager {
   async execute(transaction: Transaction) {
     this.validate(transaction);
 
-    await this.postnet.execute(new TransactionInitCommand({
+    await this.posnet.execute(new TransactionInitCommand({
       blockMode: true,
     }));
 
     for (const product of transaction.products) {
-      await this.postnet.execute(new TransactionLineCommand(product));
+      await this.posnet.execute(new TransactionLineCommand(product));
     }
 
     for (const payment of transaction.payments) {
-      await this.postnet.execute(new TransactionPaymentCommand(payment));
+      await this.posnet.execute(new TransactionPaymentCommand(payment));
     }
 
 
-    await this.postnet.execute(new TransactionEndCommand(transaction.end));
+    await this.posnet.execute(new TransactionEndCommand(transaction.end));
   }
 }

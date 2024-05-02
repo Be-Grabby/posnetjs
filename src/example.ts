@@ -1,16 +1,16 @@
-import { Postnet, TransactionCencelCommand } from './postnet';
+import { Posnet, TransactionCencelCommand } from './posnet';
 
 (async () => {
   try {
-    const postnet = new Postnet({
+    const posnet = new Posnet({
       path: '/dev/tty.usbmodem92138719931',
       debug: {
         send: true,
       },
     });
 
-    // const transactionManager = new TransactionManager(postnet);
-    postnet.execute(new TransactionCencelCommand());
+    // const transactionManager = new TransactionManager(posnet);
+    posnet.execute(new TransactionCencelCommand());
 
   //   await transactionManager.execute({
   //     products: [{

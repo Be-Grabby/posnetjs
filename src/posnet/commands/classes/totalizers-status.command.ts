@@ -1,5 +1,5 @@
 import { commandToString, stringToCommand } from '../../../utils/command-parser.util';
-import { PostnetCommand } from '../interfaces/postnet-command.interface';
+import { PosnetCommand } from '../interfaces/posnet-command.interface';
 
 /**
  * Totalizers status
@@ -42,7 +42,7 @@ import { PostnetCommand } from '../interfaces/postnet-command.interface';
  * vf VAT F rate value - Num.
  * vg VAT G rate value - Num.
  */
-export class TotalizersStatusCommand implements PostnetCommand {
+export class TotalizersStatusCommand implements PosnetCommand {
   allias = 'stot';
 
   validate(): boolean {

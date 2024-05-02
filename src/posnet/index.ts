@@ -1,3 +1,3 @@
 export * from './commands';
-export * from './postnet';
+export * from './posnet';
 

@@ -1,1 +1,1 @@
-export * from './postnet';
+export * from './posnet';

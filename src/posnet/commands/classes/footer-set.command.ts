@@ -1,5 +1,5 @@
 import { stringToCommand } from '../../../utils/command-parser.util';
-import { PostnetCommand } from '../interfaces/postnet-command.interface';
+import { PosnetCommand } from '../interfaces/posnet-command.interface';
 
 /**
  * Programming information lines in footer
@@ -26,7 +26,7 @@ import { PostnetCommand } from '../interfaces/postnet-command.interface';
  * 6. Between tow daily reports it is possible to send and store up to 25 different lines.
  * 7. Availability in read only mode: NO
  */
-export class FooterSetCommand implements PostnetCommand {
+export class FooterSetCommand implements PosnetCommand {
   allias = 'ftrinfoset';
 
   constructor(private payload: { text: string; printOnAllReceipts?: boolean }) {}

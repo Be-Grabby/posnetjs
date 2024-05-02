@@ -1,7 +1,7 @@
 import { stringToCommand } from '../../../utils/command-parser.util';
-import { PostnetCommand } from '../interfaces/postnet-command.interface';
+import { PosnetCommand } from '../interfaces/posnet-command.interface';
 
-export class BeepCommand implements PostnetCommand {
+export class BeepCommand implements PosnetCommand {
   allias = 'beep';
 
   validate(): boolean {

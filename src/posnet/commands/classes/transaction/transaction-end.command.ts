@@ -1,5 +1,5 @@
 import { stringToCommand } from '../../../../utils/command-parser.util';
-import { PostnetCommand } from '../../interfaces/postnet-command.interface';
+import { PosnetCommand } from '../../interfaces/posnet-command.interface';
 
 export interface TransactionEndPayload {
   /**
@@ -34,7 +34,7 @@ export interface TransactionEndPayload {
  * 5. If sent payment forms exceed TO BE PAID amount and change was not passed, the device calculates the change itself.
  * 6. Availability in read only mode: NO
  */
-export class TransactionEndCommand implements PostnetCommand {
+export class TransactionEndCommand implements PosnetCommand {
   allias = 'trend';
 
   validate(): boolean {

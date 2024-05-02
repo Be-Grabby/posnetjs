@@ -1,5 +1,5 @@
 import { commandToString, stringToCommand } from '../../../utils/command-parser.util';
-import { PostnetCommand } from '../interfaces/postnet-command.interface';
+import { PosnetCommand } from '../interfaces/posnet-command.interface';
 
 /**
  * General status
@@ -17,7 +17,7 @@ import { PostnetCommand } from '../interfaces/postnet-command.interface';
  * hr Header programmed (Y/N)
  * nu Fiscal memory id
  */
-export class StatusCommand implements PostnetCommand {
+export class StatusCommand implements PosnetCommand {
   allias = 'scomm';
 
   validate(): boolean {

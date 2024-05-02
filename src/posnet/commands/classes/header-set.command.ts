@@ -1,5 +1,5 @@
 import { stringToCommand } from '../../../utils/command-parser.util';
-import { PostnetCommand } from '../interfaces/postnet-command.interface';
+import { PosnetCommand } from '../interfaces/posnet-command.interface';
 
 /**
  * Header programming
@@ -23,7 +23,7 @@ import { PostnetCommand } from '../interfaces/postnet-command.interface';
  * line length is 20 characters. LF character (0Ah) separates the lines.
  * 6. Availability in read only mode: NO
  */
-export class HeaderSetCommand implements PostnetCommand {
+export class HeaderSetCommand implements PosnetCommand {
   allias = 'hdrset';
 
   constructor(private text: string) {}

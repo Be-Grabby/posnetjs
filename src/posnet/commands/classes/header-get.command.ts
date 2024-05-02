@@ -1,12 +1,11 @@
 import { commandToString, stringToCommand } from '../../../utils/command-parser.util';
-import { PostnetCommand } from '../interfaces/postnet-command.interface';
+import { PosnetCommand } from '../interfaces/posnet-command.interface';
 
 /**
- * Reading of information lines in footer
+ * Header reading
  *
  * Response:
- * Name   Description                                                                         Required      Type          Remarks
- * tx     Content of information lines in footer. Lines are separated by LF character (0Ah).  YES            Alphanum.    Regulations allow printing 3 additional information lines at the end of a receipt.
+ * tx Header content - Alphanum.
  *
  * Remarks:
  * 1. Formatting characters:
@@ -21,8 +20,8 @@ import { PostnetCommand } from '../interfaces/postnet-command.interface';
  * line. Maximum line length is 40 characters. LF character (0Ah) separates the lines.
  * 5. Availability in read only mode: YES
  */
-export class FooterGetCommand implements PostnetCommand {
-  allias = 'ftrinfoget';
+export class HeaderGetCommand implements PosnetCommand {
+  allias = 'hdrget';
 
   validate(): boolean {
     return true;
@@ -34,8 +33,6 @@ export class FooterGetCommand implements PostnetCommand {
 
   parse(message: Buffer) {
     const { params } = commandToString(message);
-
-    console.log('params', params);
 
     return {
       text: params.tx

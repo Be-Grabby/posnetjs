@@ -10,6 +10,6 @@ export * from './classes/transaction/transaction-end.command';
 export * from './classes/transaction/transaction-init.command';
 export * from './classes/transaction/transaction-line.command';
 export * from './classes/transaction/transaction-payment.command';
-export * from './interfaces/postnet-command.interface';
+export * from './interfaces/posnet-command.interface';
 export * from './manager/transaction.manager';
 

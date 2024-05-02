@@ -3,23 +3,23 @@
 ### Installing
 Download from npm:
 ```
-npm i --save postnetjs
+npm i --save posnetjs
 ```
 
 Example of usage:
 
 ```typescript
-import { PaymentFormType, Postnet, TransactionManager } from './postnet';
+import { PaymentFormType, Posnet, TransactionManager } from './posnet';
 
 (async () => {
-  const postnet = new Postnet({
+  const posnet = new Posnet({
     path: '<postent device serial port>',
     debug: {
       send: true,
     },
   });
 
-  const transactionManager = new TransactionManager(postnet);
+  const transactionManager = new TransactionManager(posnet);
 
   await transactionManager.execute({
     products: [{

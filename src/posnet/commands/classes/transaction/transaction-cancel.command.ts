@@ -1,10 +1,10 @@
 import { stringToCommand } from '../../../../utils/command-parser.util';
-import { PostnetCommand } from '../../interfaces/postnet-command.interface';
+import { PosnetCommand } from '../../interfaces/posnet-command.interface';
 
 /**
  * [prncancel] Cancellation of transaction or printout
  */
-export class TransactionCencelCommand implements PostnetCommand {
+export class TransactionCencelCommand implements PosnetCommand {
   allias = 'trcancel';
 
   validate(): boolean {

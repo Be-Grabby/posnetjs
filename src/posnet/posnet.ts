@@ -1,8 +1,8 @@
 import { SerialPort } from 'serialport';
 import { parseErrors } from '../utils/error.util';
-import { PostnetCommand } from './commands/interfaces/postnet-command.interface';
+import { PosnetCommand } from './commands/interfaces/posnet-command.interface';
 
-export interface PostnetConfig {
+export interface PosnetConfig {
   path: string;
   debug?: {
     send?: boolean;
@@ -10,19 +10,35 @@ export interface PostnetConfig {
   };
 }
 
-export class Postnet {
-  private serialPort = new SerialPort({
+export class Posnet {
+  private serialPort: SerialPort | null = new SerialPort({
     path: this.config.path,
     baudRate: 9600,
   });
 
   messageResolver?: (message: Buffer) => any;
 
-  constructor(private config: PostnetConfig) {
+  constructor(private config: PosnetConfig) {
     this.bootstrap();
   }
 
-  bootstrap() {
+  async bootstrap() {
+    const devices = await this.getAvailableDevices();
+
+    console.log(devices);
+
+    if (devices.length === 0) {
+      throw ({
+        message: 'No POSNET devices found.',
+      });
+
+    }
+
+
+    this.serialPort = new SerialPort({
+      path: this.config.path,
+      baudRate: 9600,
+    });
     // if (!this.serialPort.isOpen.valueOf()) {
     //   throw ({
     //     message: 'Serial port is not available.',
@@ -40,7 +56,7 @@ export class Postnet {
     });
   }
 
-  async execute(command: PostnetCommand) {
+  async execute(command: PosnetCommand) {
     if (!command.validate()) {
       throw ({
         message: 'Invalid params for the command.',
@@ -72,5 +88,11 @@ export class Postnet {
 
       this.serialPort.write(commandBuffer);
     });
+  }
+
+  async getAvailableDevices() {
+    const list = await SerialPort.list();
+
+    return list.filter((device) => device.manufacturer === 'POSNET');
   }
 }

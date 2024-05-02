@@ -1,5 +1,5 @@
 import { stringToCommand } from '../../../../utils/command-parser.util';
-import { PostnetCommand } from '../../interfaces/postnet-command.interface';
+import { PosnetCommand } from '../../interfaces/posnet-command.interface';
 
 export enum PaymentFormType {
   CASH = 0,
@@ -42,7 +42,7 @@ export interface TransactionPaymentPayload {
  * 2. Payment form sum covering the value to be paid must be sent.
  * 3. Availability in read only mode: NO
  */
-export class TransactionPaymentCommand implements PostnetCommand {
+export class TransactionPaymentCommand implements PosnetCommand {
   allias = 'trpayment';
 
   validate(): boolean {

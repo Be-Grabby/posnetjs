@@ -1,11 +1,10 @@
-
-interface PostnetError {
+interface PosnetError {
   code: number;
   codeStr: string;
   message: string;
 }
 
-export const parseErrors = (command: Buffer): PostnetError | null =>  {
+export const parseErrors = (command: Buffer): PosnetError | null =>  {
   const commandStr = command.toString('binary').slice(1, -1); // remove STX, ETX and CRC
   const [cmd, ...params] = commandStr.split('\t'); // split command and params
 
@@ -29,7 +28,7 @@ export const parseErrors = (command: Buffer): PostnetError | null =>  {
   return errrors.find(() => true);
 }
 
-export const frameErrors: PostnetError[] = [{
+export const frameErrors: PosnetError[] = [{
   code: 1,
   codeStr: 'PROTO_ERR_CMD_UNKNOWN',
   message: 'PROTO_ERR_CMD_UNKNOWN: Nierozpoznana komenda',
@@ -105,7 +104,7 @@ export const frameErrors: PostnetError[] = [{
   message: 'PROTO_ERR_SYNTAX: Błąd budowy ramk',
 }];
 
-export const commandErrorMessages: PostnetError[] = [{
+export const commandErrorMessages: PosnetError[] = [{
   code: 10,
   codeStr: 'ERR_CANCEL',
   message: 'ERR_CANCEL: Błąd nietypowy - rezygnacja, przerwanie funkcji',

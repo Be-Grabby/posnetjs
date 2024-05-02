@@ -1,5 +1,5 @@
 import { stringToCommand } from '../../../../utils/command-parser.util';
-import { PostnetCommand } from '../../interfaces/postnet-command.interface';
+import { PosnetCommand } from '../../interfaces/posnet-command.interface';
 
 export interface TransactionLinePayload {
   /**
@@ -76,7 +76,7 @@ export interface TransactionLinePayload {
 /**
  * [trline] Transaction Line
  */
-export class TransactionLineCommand implements PostnetCommand {
+export class TransactionLineCommand implements PosnetCommand {
   allias = 'trline';
 
   validate(): boolean {

@@ -1,4 +1,4 @@
-export abstract class PostnetCommand {
+export abstract class PosnetCommand {
   allias: string;
   abstract execute(): Buffer;
   abstract validate(): boolean;
