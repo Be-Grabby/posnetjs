@@ -1,15 +1,20 @@
-import { Posnet, TransactionCencelCommand } from './posnet';
+import { BeepCommand, Posnet, TransactionCencelCommand } from './posnet';
 
 (async () => {
   try {
+
+    console.log('available devices: ', await Posnet.getAvailableDevices());
+
     const posnet = new Posnet({
-      path: '/dev/tty.usbmodem92138719931',
       debug: {
         send: true,
       },
     });
 
+    await posnet.bootstrap();
+
     // const transactionManager = new TransactionManager(posnet);
+    posnet.execute(new BeepCommand());
     posnet.execute(new TransactionCencelCommand());
 
   //   await transactionManager.execute({

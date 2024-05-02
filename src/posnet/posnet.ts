@@ -3,7 +3,7 @@ import { parseErrors } from '../utils/error.util';
 import { PosnetCommand } from './commands/interfaces/posnet-command.interface';
 
 export interface PosnetConfig {
-  path: string;
+  path?: string;
   debug?: {
     send?: boolean;
     receive?: boolean;
@@ -11,39 +11,40 @@ export interface PosnetConfig {
 }
 
 export class Posnet {
-  private serialPort: SerialPort | null = new SerialPort({
-    path: this.config.path,
-    baudRate: 9600,
-  });
+  private serialPort: SerialPort | null = null;
 
   messageResolver?: (message: Buffer) => any;
 
-  constructor(private config: PosnetConfig) {
-    this.bootstrap();
-  }
+  constructor(private config: PosnetConfig) {}
 
   async bootstrap() {
-    const devices = await this.getAvailableDevices();
+    if (this.serialPort) {
+      throw ({
+        message: 'POSNET device is already connected.',
+      });
+    }
 
-    console.log(devices);
+    const devices = await Posnet.getAvailableDevices();
 
     if (devices.length === 0) {
       throw ({
         message: 'No POSNET devices found.',
       });
+    }
 
+    if (devices.length > 1 && !this.config?.path) {
+      throw ({
+        message: 'Multiple POSNET devices found. Please specify the path.',
+      });
     }
 
 
     this.serialPort = new SerialPort({
-      path: this.config.path,
+      path: this.config?.path ?? devices[0].path,
       baudRate: 9600,
     });
-    // if (!this.serialPort.isOpen.valueOf()) {
-    //   throw ({
-    //     message: 'Serial port is not available.',
-    //   });
-    // }
+
+    // TODO: handle serial port errors or closed connections
 
     this.serialPort.on('data', (data) =>  {
       if (this.config.debug && this.config.debug.receive) {
@@ -90,7 +91,7 @@ export class Posnet {
     });
   }
 
-  async getAvailableDevices() {
+  static async getAvailableDevices() {
     const list = await SerialPort.list();
 
     return list.filter((device) => device.manufacturer === 'POSNET');
