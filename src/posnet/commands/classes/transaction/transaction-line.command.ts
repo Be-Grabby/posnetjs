@@ -1,6 +1,16 @@
 import { stringToCommand } from '../../../../utils/command-parser.util';
 import { PosnetCommand } from '../../interfaces/posnet-command.interface';
 
+export enum VatRate {
+  VAT_23 = 0,
+  // VAT_?? = 1,
+  VAT_5 = 2,
+  VAT_0 = 3,
+  VAT_0_ZWOLNIONA_E = 4,
+  // VAT_?? = 5,
+  // VAT_?? = 6,
+}
+
 export interface TransactionLinePayload {
   /**
    * Name of goods up to 40 characters
@@ -8,17 +18,10 @@ export interface TransactionLinePayload {
    */
   name: string;
   /**
-   * Vat rate - Rate number provided (0 - 6)
-   * 0 - 23%
-   * 1 - ???
-   * 2 - 5%
-   * 3 - 0%
-   * 4 - 0% - Zwolniona E
-   * 5 - ???
-   * 6 - ??
+   * Vat rate - Rate number provided
    * Command: vt
    */
-  vatRate: 0 | 1 | 2 | 3 | 4 | 5 | 6;
+  vatRate: VatRate;
   /**
    * Total Amount in cents
    * Command: wa
