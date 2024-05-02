@@ -2,7 +2,7 @@ import { Posnet } from '../../posnet';
 import { TransactionEndCommand, TransactionEndPayload } from '../classes/transaction/transaction-end.command';
 import { TransactionInitCommand } from '../classes/transaction/transaction-init.command';
 import { TransactionLineCommand, TransactionLinePayload } from '../classes/transaction/transaction-line.command';
-import { TransactionPaymentCommand, TransactionPaymentPayload } from '../classes/transaction/transaction-payment.command';
+import { TransactionPaymentPayload } from '../classes/transaction/transaction-payment.command';
 
 export interface Transaction {
   products: TransactionLinePayload[],
@@ -43,9 +43,13 @@ export class TransactionManager {
       await this.posnet.execute(new TransactionLineCommand(product));
     }
 
-    for (const payment of transaction.payments) {
-      await this.posnet.execute(new TransactionPaymentCommand(payment));
-    }
+    // await this.posnet.execute(new TransactionFreedataCommand({
+    //   sc: 2,
+    //   text: 'CARD',
+    // }));
+
+    // for (const payment of transaction.payments) {
+    // }
 
 
     await this.posnet.execute(new TransactionEndCommand(transaction.end));

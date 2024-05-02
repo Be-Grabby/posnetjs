@@ -3,7 +3,7 @@ import { PosnetCommand } from '../../interfaces/posnet-command.interface';
 
 export enum VatRate {
   VAT_23 = 0,
-  // VAT_?? = 1,
+  VAT_8 = 1,
   VAT_5 = 2,
   VAT_0 = 3,
   VAT_0_ZWOLNIONA_E = 4,
