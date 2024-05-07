@@ -8,30 +8,45 @@ import { BeepCommand, PaymentFormType, Posnet, TransactionCencelCommand, Transac
     const posnet = new Posnet({
       debug: {
         send: true,
-        receive: true,
+        // receive: true,
       },
     });
 
     await posnet.bootstrap();
 
-    posnet.execute(new BeepCommand());
-    posnet.execute(new TransactionCencelCommand());
+    await posnet.execute(new BeepCommand());
+    await posnet.execute(new TransactionCencelCommand());
+
 
     const transactionManager = new TransactionManager(posnet);
     await transactionManager.execute({
+      buyer: {
+        invoiceNumber: '251/FA/2024',
+        nipNumber: 'B10777803',
+        paymentDeadline: '2024-12-31',
+        paymentForm: 'CASH / CARD',
+        purchaserName: 'Grabby Innovations S.L\L04289 La Huelga, Almería',
+      },
       products: [{
-        name: 'Coca Cola 2L',
+        name: 'Pepsi 2L',
         unitPrice: 1000,
-        totalAmount: 1000,
-        quantity: 1,
+        totalAmount: 2000,
+        quantity: 2,
         vatRate: 0,
+        discount: {
+          total: 200,
+        },
       }],
       payments: [{
         value: 1000,
         type: PaymentFormType.CARD,
+      }, {
+        value: 800,
+        type: PaymentFormType.CASH,
       }],
       end: {
-        total: 1000,
+        total: 1800,
+        valuePaymentForms: 1800,
       }
     });
   } catch(error) {

@@ -1,7 +1,7 @@
-import { stringToCommand } from '../../../../utils/command-parser.util';
-import { PosnetCommand } from '../../interfaces/posnet-command.interface';
+import { stringToCommand } from '../../../../../utils/command-parser.util';
+import { PosnetCommand } from '../../../interfaces/posnet-command.interface';
 
-export interface TransactionFreedataPayload {
+export interface TransactionVatFreedataPayload {
   /**
    * Text?
    * Command: tx
@@ -17,14 +17,14 @@ export interface TransactionFreedataPayload {
 /**
  * [trfvfreedata] ??? not in the manual
  */
-export class TransactionFreedataCommand implements PosnetCommand {
+export class TransactionVatFreedataCommand implements PosnetCommand {
   allias = 'trfvfreedata';
 
   validate(): boolean {
     return true;
   }
 
-  constructor(private options: TransactionFreedataPayload) {}
+  constructor(private options: TransactionVatFreedataPayload) {}
 
   execute() {
     return stringToCommand(this.allias, {

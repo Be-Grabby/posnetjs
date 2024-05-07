@@ -58,21 +58,16 @@ export interface TransactionLinePayload {
    */
   discount?: {
     /**
-     * Discount/surcharge name up to 25 characters
-     * Command: rp
-     */
-    name?: string;
-    /**
      * Percent discount/surcharge value (0.01 – 99.99)
      * Command: rp
      */
-    percentage?: string;
+    percentage?: number;
     /**
      * Amount discount/surcharge value
      * Discount can't exceed the value of goods. The total of surcharge and price of goods can not exceed the scope of wa parameter
      * Command: rw
      */
-    total?: string;
+    total?: number;
   };
 }
 
@@ -83,6 +78,12 @@ export class TransactionLineCommand implements PosnetCommand {
   allias = 'trline';
 
   validate(): boolean {
+    if (this.options.discount?.total && this.options.discount?.percentage) {
+      throw {
+        message: 'Discount can not have total and percentage at the same time',
+      }
+    }
+
     return true;
   }
 
@@ -99,9 +100,8 @@ export class TransactionLineCommand implements PosnetCommand {
       op: this.options.description,
       jm: this.options.measureUnit,
       rd: this.options.discount ? 1 : undefined,
-      rp: this.options.discount?.name,
       rw: this.options.discount?.total,
-      pd: this.options.discount?.percentage
+      rp: this.options.discount?.percentage
     });
   }
 }
