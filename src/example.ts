@@ -1,4 +1,4 @@
-import { BeepCommand, PaymentFormType, Posnet, TransactionCencelCommand, TransactionManager } from './posnet';
+import { PaymentFormType, Posnet, TransactionManager } from './posnet';
 
 (async () => {
   try {
@@ -8,45 +8,51 @@ import { BeepCommand, PaymentFormType, Posnet, TransactionCencelCommand, Transac
     const posnet = new Posnet({
       debug: {
         send: true,
-        // receive: true,
+        receive: true,
       },
     });
 
     await posnet.bootstrap();
 
-    await posnet.execute(new BeepCommand());
-    await posnet.execute(new TransactionCencelCommand());
+    // await posnet.execute(new StatusCommand());
+    // await posnet.execute(new BeepCommand());
+    // await posnet.execute(new DisplayTextCommand({
+    //   displayId: 0,
+    //   lineContent: '',
+    //   lineNumber: 0,
+    // }));
+    // await posnet.execute(new TransactionCencelCommand());
 
 
     const transactionManager = new TransactionManager(posnet);
     await transactionManager.execute({
-      buyer: {
-        invoiceNumber: '251/FA/2024',
-        nipNumber: 'B10777803',
-        paymentDeadline: '2024-12-31',
-        paymentForm: 'CASH / CARD',
-        purchaserName: 'Grabby Innovations S.L\L04289 La Huelga, Almería',
-      },
+      // buyer: {
+      //   invoiceNumber: '251/FA/2024',
+      //   nipNumber: 'B10777803',
+      //   paymentDeadline: '2024-12-31',
+      //   paymentForm: 'CASH / CARD',
+      //   purchaserName: 'Grabby Innovations S.L\L04289 La Huelga, Almería',
+      // },
       products: [{
-        name: 'Pepsi 2L',
-        unitPrice: 1000,
-        totalAmount: 2000,
-        quantity: 2,
+        name: 'Test Product',
+        unitPrice: 1,
+        totalAmount: 1,
+        quantity: 1,
         vatRate: 0,
-        discount: {
-          total: 200,
-        },
+        // discount: {
+        //   total: 200,
+        // },
       }],
       payments: [{
-        value: 1000,
+        value: 1,
         type: PaymentFormType.CARD,
-      }, {
-        value: 800,
-        type: PaymentFormType.CASH,
+      // }, {
+      //   value: 800,
+      //   type: PaymentFormType.CASH,
       }],
       end: {
-        total: 1800,
-        valuePaymentForms: 1800,
+        total: 1,
+        valuePaymentForms: 1,
       }
     });
   } catch(error) {

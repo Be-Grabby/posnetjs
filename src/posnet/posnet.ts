@@ -94,6 +94,6 @@ export class Posnet {
   static async getAvailableDevices() {
     const list = await SerialPort.list();
 
-    return list.filter((device) => device.manufacturer === 'POSNET');
+    return list.filter((device) => `${device.manufacturer}`.toUpperCase() === 'POSNET' || `${device.vendorId}` === '1424');
   }
 }

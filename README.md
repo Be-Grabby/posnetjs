@@ -6,6 +6,13 @@ Download from npm:
 npm i --save posnetjs
 ```
 
+### Make sure that the protocol is USB
+
+The interface is selected in the printer menu.
+```
+Konfiguracja → 1 Parametry ogólne → 7 Funkcje komunik. → 1 Interfejs PC.
+```
+
 Example of usage:
 
 ```typescript
