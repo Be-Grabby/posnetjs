@@ -1,4 +1,4 @@
-import { PaymentFormType, Posnet, TransactionManager } from './posnet';
+import { BeepCommand, PaymentFormType, Posnet, TransactionManager } from './posnet';
 
 (async () => {
   try {
@@ -15,7 +15,7 @@ import { PaymentFormType, Posnet, TransactionManager } from './posnet';
     await posnet.bootstrap();
 
     // await posnet.execute(new StatusCommand());
-    // await posnet.execute(new BeepCommand());
+    await posnet.execute(new BeepCommand());
     // await posnet.execute(new DisplayTextCommand({
     //   displayId: 0,
     //   lineContent: '',

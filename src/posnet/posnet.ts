@@ -4,6 +4,7 @@ import { PosnetCommand } from './commands/interfaces/posnet-command.interface';
 
 export interface PosnetConfig {
   path?: string;
+  baudRate?: number;
   debug?: {
     send?: boolean;
     receive?: boolean;
@@ -38,10 +39,17 @@ export class Posnet {
       });
     }
 
+    const path = this.config?.path ?? devices[0].path;
+
+    if (!path) {
+      throw ({
+        message: 'No path provided for the POSNET device.',
+      });
+    }
 
     this.serialPort = new SerialPort({
-      path: this.config?.path ?? devices[0].path,
-      baudRate: 9600,
+      path,
+      baudRate: this.config.baudRate ?? 9600,
     });
 
     // TODO: handle serial port errors or closed connections

@@ -16,22 +16,6 @@ export class TransactionManager {
   constructor(private posnet: Posnet) {}
 
   validate(transaction: Transaction) {
-    const totalPrice = transaction.products.reduce((acc, product) => acc + product.totalAmount, 0);
-    const totalPaid = transaction.payments.reduce((acc, payment) => acc + payment.value, 0);
-    const totalDiscount = transaction.products.reduce((acc, product) => acc + product.discount?.total, 0);
-
-    // if (totalPrice !== (transaction.end.total + (totalDiscount || 0))) {
-    //   throw ({
-    //     message: 'Total price does not match the sum of the products',
-    //   });
-    // }
-
-    if (totalPaid !== transaction.end.total && transaction.payments.length > 0) {
-      throw ({
-        message: 'Total paid does not match the total price',
-      });
-    }
-
     return true;
   }
 

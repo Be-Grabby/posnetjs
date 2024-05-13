@@ -13,6 +13,12 @@ The interface is selected in the printer menu.
 Konfiguracja → 1 Parametry ogólne → 7 Funkcje komunik. → 1 Interfejs PC.
 ```
 
+The baudRate should be set to 9600
+
+```
+Konfiguracja → Konfig. sprezetu → 7 Porty komunik. → 1 COM →  9600 → 1 Brak
+```
+
 Example of usage:
 
 ```typescript
