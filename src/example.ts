@@ -1,4 +1,4 @@
-import { BeepCommand, PaymentFormType, Posnet, TransactionManager } from './posnet';
+import { BeepCommand, PaymentFormType, Posnet, TransactionCencelCommand, TransactionInvoiceType, TransactionManager } from './posnet';
 
 (async () => {
   try {
@@ -21,38 +21,57 @@ import { BeepCommand, PaymentFormType, Posnet, TransactionManager } from './posn
     //   lineContent: '',
     //   lineNumber: 0,
     // }));
-    // await posnet.execute(new TransactionCencelCommand());
+    await posnet.execute(new TransactionCencelCommand());
 
 
     const transactionManager = new TransactionManager(posnet);
     await transactionManager.execute({
-      // buyer: {
-      //   invoiceNumber: '251/FA/2024',
-      //   nipNumber: 'B10777803',
-      //   paymentDeadline: '2024-12-31',
-      //   paymentForm: 'CASH / CARD',
-      //   purchaserName: 'Grabby Innovations S.L\L04289 La Huelga, Almería',
-      // },
+      buyer: {
+        // invoiceNumber: '251/FA/2024',
+        nipNumber: 'B10777803',
+        // paymentDeadline: '2024-12-31',
+        // paymentForm: 'CASH / CARD',
+        // purchaserName: 'Grabby Innovations S.L\L04289 La Huelga, Almería',
+      },
+      invoiceType: TransactionInvoiceType.SIMPLIFIED,
       products: [{
-        name: 'Test Product',
-        unitPrice: 1,
-        totalAmount: 1,
+        name: 'wstep wakeboard',
+        unitPrice: 10000,
+        totalAmount: 20000,
+        quantity: 2,
+        vatRate: 1,
+        // discount: {
+        //   total: 200,
+        // },
+      }, {
+        name: 'wstep wakeboard',
+        unitPrice: 6500,
+        totalAmount: 6500,
         quantity: 1,
-        vatRate: 0,
+        vatRate: 1,
+        // discount: {
+        //   total: 200,
+        // },
+      }, {
+        name: 'wstep wakeboard',
+        unitPrice: 8000,
+        totalAmount: 8000,
+        quantity: 1,
+        vatRate: 1,
         // discount: {
         //   total: 200,
         // },
       }],
       payments: [{
-        value: 1,
-        type: PaymentFormType.CARD,
+        value: 34500,
+        type: PaymentFormType.CASH,
       // }, {
       //   value: 800,
       //   type: PaymentFormType.CASH,
       }],
       end: {
-        total: 1,
-        valuePaymentForms: 1,
+        total: 34500,
+        valuePaymentForms: 34500,
       }
     });
   } catch(error) {

@@ -6,7 +6,7 @@ export interface TransactionVatInitPayload {
    * alphanum. Up to 15 characters
    * Command: nb
    */
-  invoiceNumber: string;
+  invoiceNumber?: string;
 
   /**
    * alphanum. Up to 20 characters
@@ -18,19 +18,19 @@ export interface TransactionVatInitPayload {
    * alphanum. The field may be composed of 3 lines separated by LF character. The lengths of line should be adjusted to printing mechanism. Redundant characters are cut.
    * Command: na
    */
-  purchaserName: string;
+  purchaserName?: string;
 
   /**
    * alphanum. Up to 16 characters
    * Command: pd
    */
-  paymentDeadline: string;
+  paymentDeadline?: string;
 
   /**
    * alphanum. Up to 20 characters
    * Command: pt
    */
-  paymentForm: string;
+  paymentForm?: string;
 
   /**
    * alphanum.
@@ -67,23 +67,24 @@ export class TransactionVatInitCommand implements PosnetCommand {
   allias = 'trfvinit';
 
   validate(): boolean {
-    if (!this.options.invoiceNumber.length || this.options.invoiceNumber.length > 15) {
+    if (!this.options.invoiceNumber?.length || this.options.invoiceNumber?.length > 15) {
       throw new Error('Invoice number must be between 1 and 15 characters');
     }
 
-    if (!this.options.nipNumber.length || this.options.nipNumber.length > 20) {
+    if (!this.options.nipNumber?.length || this.options.nipNumber?.length > 20) {
       throw new Error('NIP number must be between 1 and 20 characters');
     }
 
-    if (!this.options.purchaserName.length) {
+    if (!this.options.purchaserName?.length) {
       throw new Error('Purchaser name must be provided');
     }
+
 
     if (!this.options.paymentDeadline.length || this.options.paymentDeadline.length > 16) {
       throw new Error('Payment deadline must be between 1 and 16 characters');
     }
 
-    if (!this.options.paymentForm.length || this.options.paymentForm.length > 20) {
+    if (!this.options.paymentForm?.length || this.options.paymentForm?.length > 20) {
       throw new Error('Payment form must be between 1 and 20 characters');
     }
 

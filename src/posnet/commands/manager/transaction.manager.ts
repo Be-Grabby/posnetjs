@@ -3,13 +3,20 @@ import { TransactionEndCommand, TransactionEndPayload } from '../classes/transac
 import { TransactionInitCommand } from '../classes/transaction/transaction-init.command';
 import { TransactionLineCommand, TransactionLinePayload } from '../classes/transaction/transaction-line.command';
 import { TransactionPaymentCommand, TransactionPaymentPayload } from '../classes/transaction/transaction-payment.command';
+import { TransactionVatBuyerCommand } from '../classes/transaction/vat/transaction-vat-buyer.command';
 import { TransactionVatInitCommand, TransactionVatInitPayload } from '../classes/transaction/vat/transaction-vat-init.command';
+
+export enum TransactionInvoiceType {
+  VAT = 'VAT',
+  SIMPLIFIED = 'SIMPLIFIED',
+}
 
 export interface Transaction {
   products: TransactionLinePayload[];
   payments: TransactionPaymentPayload[];
   buyer?: TransactionVatInitPayload;
   end: TransactionEndPayload;
+  invoiceType?: TransactionInvoiceType;
 }
 
 export class TransactionManager {
@@ -22,14 +29,13 @@ export class TransactionManager {
   async execute(transaction: Transaction) {
     this.validate(transaction);
 
-    if (transaction.buyer) {
+    if (transaction.buyer && transaction.invoiceType === TransactionInvoiceType.VAT) {
       await this.posnet.execute(new TransactionVatInitCommand(transaction.buyer));
     } else {
       await this.posnet.execute(new TransactionInitCommand({
         blockMode: true,
       }));
     }
-
     for (const product of transaction.products) {
       await this.posnet.execute(new TransactionLineCommand(product));
     }
@@ -47,6 +53,11 @@ export class TransactionManager {
       }
     }
 
+    if (transaction.buyer && transaction.invoiceType !== TransactionInvoiceType.VAT) {
+      await this.posnet.execute(new TransactionVatBuyerCommand({
+        nipNumber: transaction.buyer.nipNumber,
+      }));
+    }
 
     await this.posnet.execute(new TransactionEndCommand(transaction.end));
   }

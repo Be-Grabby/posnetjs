@@ -42,6 +42,8 @@ export class FooterSetCommand implements PosnetCommand {
   }
 
   execute() {
-    return stringToCommand(this.allias, { tx: this.payload.text });
+    return stringToCommand(this.allias, {
+      tx: this.payload.text,
+    });
   }
 }
